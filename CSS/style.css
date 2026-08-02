@@ -1,7 +1,5 @@
 /* =========================================================
    DIALGA — Global Stylesheet
-   Stark, editorial, high-contrast black & white system
-   Desktop only, no animations
    ========================================================= */
 
 /* -----------------------------
@@ -94,19 +92,18 @@ body {
 /* -----------------------------
    5. HEADER
 ------------------------------ */
-.siteHeader {
+header {
   background-color: var(--colorWhite);
-  border-bottom: var(--border);
 }
 
-.siteHeaderInner {
+.headerContainer {
   height: var(--headerHeight);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.siteHeaderNav {
+.navLinks {
   display: flex;
   align-items: center;
   gap: 40px;
@@ -119,7 +116,7 @@ body {
   letter-spacing: 0.2em;
 }
 
-.siteHeaderLogo img {
+.logo img {
   height: 22px;
   width: auto;
 }
@@ -127,35 +124,34 @@ body {
 /* -----------------------------
    6. FOOTER
 ------------------------------ */
-.siteFooter {
-  border-top: var(--border);
+footer {
   padding: 64px 0 32px;
 }
 
-.siteFooterTop {
+.footerContainer {
   display: flex;
   justify-content: space-between;
   gap: 32px;
   padding-bottom: 48px;
 }
 
-.siteFooterLogo img {
+.logoAlt img {
   height: 112px;
   width: auto;
 }
 
-.siteFooterNav {
+.footerNavLinks {
   display: flex;
   gap: 64px;
 }
 
-.siteFooterNavGroup {
+.footerNavGroup {
   display: flex;
   flex-direction: column;
   gap: 14px;
 }
 
-.siteFooterNavHeading {
+.footerLabel {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -170,7 +166,7 @@ body {
   letter-spacing: 0.08em;
 }
 
-.siteFooterBottom {
+.footerBottom {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -178,14 +174,14 @@ body {
   border-top: var(--borderLight);
 }
 
-.siteFooterCopyright {
+.footerCopyright {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--colorGrey);
 }
 
-.siteFooterSocial {
+.footerSocials {
   display: flex;
   gap: 24px;
 }

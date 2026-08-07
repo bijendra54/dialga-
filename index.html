@@ -3,31 +3,647 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DIALGA — Hand-Crafted Luxury Timepieces</title>
+  <meta name="description" content="DIALGA is a Kathmandu atelier making hand-finished watches, one watchmaker per case, start to finish. No assembly line, no shortcuts.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DIALGA — Hand-Crafted Luxury Timepieces">
+  <meta property="og:description" content="Every DIALGA case passes through one watchmaker's hands, start to finish. No assembly line. No shortcuts.">
+  <meta property="og:image" content="assets/images/hero-img.jpg">
+  <meta property="og:url" content="https://www.dialga.com/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="assets/images/logo.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <title>DIALGA | TIMELESS BESPOKE CRAFTSMANSHIP</title>
-  <link rel="stylesheet" href="CSS/style.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Index-page-only styles. Only rules shared across pages (header shell,
+       footer, side nav, tokens, fonts) live in css/style.css. -->
+  <style>
+
+    /* ============================== HERO ============================== */
+
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 620px;
+      width: 100%;
+      overflow: hidden;
+      background: var(--charcoal);
+    }
+
+    .heroImage { position: absolute; inset: 0; z-index: 0; }
+
+    .heroImage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 0% center;
+      display: block;
+    }
+
+    /* Film-grain: a faint fractal-noise texture over the photo, blended
+       with overlay so it reads as print-grade grain rather than digital
+       flatness. Cheap in bytes (inline SVG), no image request. */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      opacity: 0.05;
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Safety-net scrim: soft bone gradient between photo and text at all
+       desktop widths, so legibility doesn't depend on the specific crop. */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(
+        to right,
+        rgba(243, 241, 236, 0) 52%,
+        rgba(243, 241, 236, 0.55) 70%,
+        rgba(243, 241, 236, 0.92) 100%
+      );
+      pointer-events: none;
+    }
+
+    .heroContent {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      z-index: 3;
+      width: clamp(300px, 34vw, 460px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 clamp(32px, 5vw, 56px) 96px 16px;
+    }
+
+    /* Staggered entrance — respects prefers-reduced-motion via the global
+       "* { animation-duration: 0.01ms !important }" rule in style.css. */
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .heroKicker, .heroHeadline, .heroSubtext, .heroCta, .heroRef, .heroScrollCue {
+      animation: heroReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+    .heroRef        { animation-delay: 0.05s; }
+    .heroKicker     { animation-delay: 0.15s; }
+    .heroHeadline   { animation-delay: 0.30s; }
+    .heroSubtext    { animation-delay: 0.48s; }
+    .heroCta        { animation-delay: 0.62s; }
+    .heroScrollCue  { animation-delay: 0.80s; }
+
+    .heroKicker {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin: 0 0 16px;
+    }
+
+    .heroHeadline {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(34px, 4.2vw, 68px);
+      line-height: 1.06;
+      margin: 0 0 22px;
+      color: var(--ink);
+    }
+
+    .heroSubtext {
+      font-size: 16px;
+      line-height: 1.65;
+      color: #3A3733;
+      margin: 0 0 28px;
+      max-width: 34ch;
+    }
+
+    .heroCta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--ink);
+      transition: gap 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .heroCta:hover, .heroCta:focus-visible {
+      gap: 16px;
+      color: var(--brass);
+      border-color: var(--brass);
+    }
+
+    .heroCta svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* Ledger plate — every section on this page carries one of these,
+       echoing the fact that every DIALGA case is individually referenced.
+       It's the one recurring device that's actually true of the product. */
+    .heroRef {
+      position: absolute;
+      left: 64px;
+      bottom: 120px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(243, 241, 236, 0.75);
+    }
+
+    .heroRef::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--brass-light);
+    }
+
+    .heroScrollCue {
+      position: absolute;
+      left: 64px;
+      bottom: 48px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(243, 241, 236, 0.6);
+    }
+
+    .heroScrollCue span {
+      display: block;
+      width: 1px;
+      height: 28px;
+      background: rgba(243, 241, 236, 0.6);
+      animation: scrollLine 2.2s ease-in-out infinite;
+      transform-origin: top;
+    }
+
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); opacity: 0; }
+      35%  { transform: scaleY(1); opacity: 1; }
+      70%  { transform: scaleY(1); opacity: 0.4; }
+      100% { transform: scaleY(0); opacity: 0; }
+    }
+
+    @media (max-width: 700px) {
+      .heroImage img { object-position: 32% center; }
+
+      /* Repurpose the desktop light scrim (.hero::before) as a dark
+         bottom-up scrim on mobile, rather than introducing a second
+         pseudo-element — same slot, different gradient. */
+      .hero::before {
+        background: linear-gradient(to top, rgba(10, 9, 8, 0.72) 0%, rgba(10, 9, 8, 0.28) 45%, rgba(10, 9, 8, 0) 68%);
+      }
+
+      .heroContent {
+        top: auto; bottom: 0; right: 0; left: 0;
+        width: auto; height: auto;
+        padding: 0 24px 48px;
+        z-index: 3;
+      }
+
+      .heroKicker { color: #D9B27C; }
+      .heroHeadline { color: var(--bone); font-size: clamp(34px, 10vw, 48px); }
+      .heroSubtext { color: rgba(243, 241, 236, 0.78); max-width: none; }
+      .heroCta { color: var(--bone); border-color: var(--bone); }
+      .heroCta:hover, .heroCta:focus-visible { color: var(--brass-light); border-color: var(--brass-light); }
+
+      .heroRef, .heroScrollCue { display: none; }
+    }
+
+    /* ========================= SHARED SECTION SHELL ========================= */
+
+    .section {
+      padding: 128px 0;
+      position: relative;
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .section.isVisible { opacity: 1; transform: translateY(0); }
+
+    .section--dark { background: var(--charcoal); color: var(--bone); }
+    .section--light { background: var(--bone); color: var(--ink); }
+
+    .sectionRef {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      margin: 0 0 28px;
+    }
+
+    .sectionRef::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--brass);
+    }
+
+    .section--dark .sectionRef { color: rgba(243, 241, 236, 0.65); }
+    .section--light .sectionRef { color: var(--stone); }
+
+    @media (max-width: 700px) {
+      .section { padding: 80px 0; }
+    }
+
+    /* ============================== ATELIER ============================== */
+
+    .atelierGrid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .atelierQuote {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(26px, 2.6vw, 40px);
+      line-height: 1.3;
+      color: var(--bone);
+      margin: 0 0 28px;
+      max-width: 18ch;
+    }
+
+    .atelierBody {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(243, 241, 236, 0.72);
+      max-width: 46ch;
+      margin: 0 0 48px;
+    }
+
+    .statRow {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(243, 241, 236, 0.16);
+      padding-top: 28px;
+    }
+
+    .statItem { min-width: 120px; }
+
+    .statNumber {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 32px;
+      color: var(--brass-light);
+      margin-bottom: 6px;
+    }
+
+    .statLabel {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(243, 241, 236, 0.55);
+    }
+
+    .atelierImage {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .atelierImage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: sepia(0.18) saturate(1.05);
+    }
+
+    @media (max-width: 860px) {
+      .atelierGrid { grid-template-columns: 1fr; gap: 40px; }
+      .atelierImage { order: -1; aspect-ratio: 16 / 10; }
+    }
+
+    /* ============================== ANATOMY ============================== */
+
+    .anatomyHead {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 32px;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+
+    .anatomyHeading {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(28px, 3vw, 44px);
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .anatomyIntro {
+      font-size: 15px;
+      color: var(--stone);
+      max-width: 30ch;
+      margin: 0;
+    }
+
+    .specStrip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(18, 17, 16, 0.12);
+    }
+
+    .specItem {
+      padding: 32px 28px 0 0;
+      border-left: 1px solid rgba(18, 17, 16, 0.12);
+      padding-left: 28px;
+    }
+
+    .specItem:first-child { border-left: none; padding-left: 0; }
+
+    .specLabel {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin: 0 0 14px;
+    }
+
+    .specText {
+      font-size: 14px;
+      line-height: 1.6;
+      color: #3A3733;
+      margin: 0;
+    }
+
+    @media (max-width: 860px) {
+      .specStrip { grid-template-columns: 1fr 1fr; }
+      .specItem:nth-child(3) { border-left: none; padding-left: 0; }
+      .specItem:nth-child(1), .specItem:nth-child(2), .specItem:nth-child(3), .specItem:nth-child(4) {
+        border-top: 1px solid rgba(18, 17, 16, 0.12);
+        padding-top: 24px;
+        margin-top: 24px;
+      }
+      .specItem:nth-child(1), .specItem:nth-child(2) { border-top: none; margin-top: 0; }
+    }
+
+    @media (max-width: 560px) {
+      .specStrip { grid-template-columns: 1fr; }
+      .specItem { border-left: none !important; padding-left: 0 !important; }
+      .specItem:not(:first-child) { border-top: 1px solid rgba(18, 17, 16, 0.12); padding-top: 24px; margin-top: 24px; }
+    }
+
+    /* ============================== FEATURED ============================== */
+
+    .featuredGrid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 72px;
+      align-items: center;
+    }
+
+    .featuredImage {
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+
+    .featuredImage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .featuredName {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(30px, 3.4vw, 48px);
+      margin: 0 0 20px;
+      color: var(--bone);
+    }
+
+    .featuredBody {
+      font-size: 16px;
+      line-height: 1.75;
+      color: rgba(243, 241, 236, 0.72);
+      max-width: 42ch;
+      margin: 0 0 32px;
+    }
+
+    .featuredMeta {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 36px;
+    }
+
+    .featuredPrice {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--brass-light);
+    }
+
+    .featuredCta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--bone);
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--bone);
+      transition: gap 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+
+    .featuredCta:hover, .featuredCta:focus-visible {
+      gap: 16px;
+      color: var(--brass-light);
+      border-color: var(--brass-light);
+    }
+
+    .featuredCta svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    @media (max-width: 860px) {
+      .featuredGrid { grid-template-columns: 1fr; gap: 40px; }
+      .featuredImage { aspect-ratio: 16 / 10; }
+    }
+
+  </style>
 </head>
 <body>
 
-  <header>
-    <div class="headerContainer container">
-      <nav class="navLinks" aria-label="Primary">
-        <a class="navLink" href="pages/product.html">Collection</a>
-        <a class="navLink" href="pages/about.html">Atelier</a>
-      </nav>
+  <a class="skipLink" href="#main">Skip to content</a>
 
-      <a class="logo" href="index.html" aria-label="DIALGA — Home">
-        <img src="assets/images/logo.svg" alt="DIALGA">
+  <div class="sideNav" aria-label="Main Navigation">
+
+    <div class="navHandle" aria-hidden="true">
+      <img src="assets/images/icon-list.svg" alt="" />
+    </div>
+
+    <div class="navLogo">
+      <a href="index.html" aria-label="DIALGA — Home">
+        <img src="assets/images/logo-light.svg" alt="DIALGA" />
       </a>
+    </div>
 
-      <nav class="navLinks" aria-label="Account">
-        <a class="navLink" href="pages/contact.html">Contact</a>
-        <a class="navLink" href="pages/sign-in.html">Account</a>
-      </nav>
+    <nav class="navMenu">
+      <a href="pages/product.html">Collection</a>
+      <a href="pages/about.html">Atelier</a>
+      <a href="pages/contact.html">Contact</a>
+      <a href="pages/sign-in.html">Account</a>
+    </nav>
+
+    <div class="navMeta">
+      <span>EST. 2026</span>
+      <span class="navMetaLoc">KATHMANDU</span>
+    </div>
+
+  </div>
+
+  <header>
+    <div class="headerInner">
+      <a class="logo" href="index.html" aria-label="DIALGA — Home">
+        <img src="assets/images/logo-light.svg" alt="DIALGA">
+      </a>
     </div>
   </header>
+
+  <main id="main">
+
+    <section class="hero">
+      <div class="heroImage">
+        <img src="assets/images/hero-img.jpg" alt="Close-up of a hand-finished DIALGA watch worn on the wrist, checking the time">
+      </div>
+      <div class="heroContent">
+        <p class="heroKicker">Est. 2026 &mdash; The Atelier</p>
+        <h1 class="heroHeadline">Time,<br>held closely.</h1>
+        <p class="heroSubtext">Every DIALGA case passes through one watchmaker's hands, start to finish. No assembly line. No shortcuts.</p>
+        <a class="heroCta" href="pages/product.html">
+          View the collection
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+      <p class="heroRef">Ref. 001 — Arrival</p>
+      <div class="heroScrollCue"><span></span>Scroll</div>
+    </section>
+
+    <!-- REF. 002 — the maker's process, stated plainly -->
+    <section class="section section--dark" id="atelier">
+      <div class="container">
+        <p class="sectionRef">Ref. 002 — The Atelier</p>
+        <div class="atelierGrid">
+          <div>
+            <p class="atelierQuote">One pair of hands carries your case from raw brass to finished crown.</p>
+            <p class="atelierBody">There's no line to move down and no station to hand off to. The watchmaker who cuts the first bevel is the same one who signs the case back — so nothing gets lost in the pass from one set of hands to another.</p>
+            <div class="statRow">
+              <div class="statItem">
+                <span class="statNumber">40+</span>
+                <span class="statLabel">Hours per case</span>
+              </div>
+              <div class="statItem">
+                <span class="statNumber">1</span>
+                <span class="statLabel">Maker, start to finish</span>
+              </div>
+              <div class="statItem">
+                <span class="statNumber">2026</span>
+                <span class="statLabel">Founded, Kathmandu</span>
+              </div>
+            </div>
+          </div>
+          <div class="atelierImage">
+            <img src="assets/images/product-4.jpg" alt="Close-up of a watchmaker's hands finishing a case in the DIALGA atelier">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REF. 003 — what's actually inside the case -->
+    <section class="section section--light" id="anatomy">
+      <div class="container">
+        <p class="sectionRef">Ref. 003 — Anatomy</p>
+        <div class="anatomyHead">
+          <h2 class="anatomyHeading">Built from the case up.</h2>
+          <p class="anatomyIntro">Four decisions, made the same way in every DIALGA case.</p>
+        </div>
+        <div class="specStrip">
+          <div class="specItem">
+            <p class="specLabel">Case</p>
+            <p class="specText">316L stainless, hand-brushed by wheel, with a brass bezel insert.</p>
+          </div>
+          <div class="specItem">
+            <p class="specLabel">Crystal</p>
+            <p class="specText">Box-domed sapphire, cut to hold the light without glare.</p>
+          </div>
+          <div class="specItem">
+            <p class="specLabel">Movement</p>
+            <p class="specText">Swiss automatic, 42-hour reserve, visible through the case back.</p>
+          </div>
+          <div class="specItem">
+            <p class="specLabel">Strap</p>
+            <p class="specText">Vegetable-tanned leather, hand-stitched, breaks in with wear.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REF. 004 — bridge into the product catalogue -->
+    <section class="section section--dark" id="featured">
+      <div class="container">
+        <p class="sectionRef">Ref. 004 — The Meridian</p>
+        <div class="featuredGrid">
+          <div class="featuredImage">
+            <img src="assets/images/product-1.jpg" alt="The Meridian, a DIALGA watch with a brushed steel case and brass bezel">
+          </div>
+          <div>
+            <h2 class="featuredName">The Meridian</h2>
+            <p class="featuredBody">Our steadiest case: a brushed 316L shell, box-sapphire crystal, and a brass bezel that darkens gracefully with age. Built to be worn daily, not kept in a drawer.</p>
+            <div class="featuredMeta">
+              <span class="featuredPrice">From $4,200</span>
+            </div>
+            <a class="featuredCta" href="pages/product.html">
+              View the collection
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <footer>
     <div class="container">
@@ -53,13 +669,34 @@
       <div class="footerBottom">
         <p class="footerCopyright">&copy; 2026 DIALGA. All Rights Reserved.</p>
         <div class="footerSocials">
-          <a class="socialLink" href="#" target="_blank" rel="noopener">Instagram</a>
-          <a class="socialLink" href="#" target="_blank" rel="noopener">Journal</a>
+          <a class="socialLink" href="#" target="_blank" rel="noopener" aria-label="Instagram (opens in new tab)">Instagram</a>
+          <a class="socialLink" href="#" target="_blank" rel="noopener" aria-label="Journal (opens in new tab)">Journal</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script src="scripts/script.js"></script>
+  <script>
+    // Index-page-only: reveal the .section blocks as they scroll into view.
+    // Reduced-motion users get the same result instantly, since the shared
+    // stylesheet zeroes transition-duration under that media query.
+    (function () {
+      var sections = document.querySelectorAll('.section');
+      if (!('IntersectionObserver' in window) || !sections.length) {
+        sections.forEach(function (s) { s.classList.add('isVisible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('isVisible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      sections.forEach(function (s) { io.observe(s); });
+    })();
+  </script>
 </body>
 </html>

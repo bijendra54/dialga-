@@ -1,193 +1,339 @@
-/* =========================================================
-   DIALGA — Global Stylesheet
-   ========================================================= */
-
-/* -----------------------------
-   1. RESET
------------------------------- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-img,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-display);
-  font-weight: 400; /* Abril Fatface ships as a single weight */
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-ul,
-ol {
-  list-style: none;
-}
-
-button,
-input {
-  font: inherit;
-  color: inherit;
-  border: none;
-  background: none;
-}
-
-/* -----------------------------
-   2. ROOT VARIABLES
------------------------------- */
 :root {
-  /* Colors */
-  --colorWhite: #ffffff;
-  --colorBlack: #000000;
-  --colorGrey: #757575;
+  --ink: #121110;
+  --bone: #F3F1EC;
+  --charcoal: #1A1815;
+  --brass: #A98454;
+  --brass-light: #B08D57;
+  --stone: #8C877D;
 
-  /* Fonts */
-  --fontDisplay: "Abril Fatface", "Times New Roman", serif;
-  --fontBody: "Manrope", "Helvetica Neue", Arial, sans-serif;
-
-  /* Layout */
-  --maxWidth: 1440px;
-  --gutter: 32px;
-  --border: 1px solid var(--colorBlack);
-  --borderLight: 1px solid #e0e0e0;
-  --headerHeight: 88px;
+  --font-display: 'Abril Fatface', Georgia, serif;
+  --font-body: 'Manrope', sans-serif;
 }
 
-/* -----------------------------
-   3. PAGE SETUP
------------------------------- */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
 body {
-  background-color: var(--colorWhite);
-  color: var(--colorBlack);
-  font-family: var(--fontBody);
-  font-size: 16px;
-  line-height: 1.5;
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bone);
 }
 
-/* -----------------------------
-   4. CONTAINER
------------------------------- */
+a { text-decoration: none; color: inherit; }
+
 .container {
-  width: 100%;
-  max-width: var(--maxWidth);
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding: 0 40px;
 }
 
-/* -----------------------------
-   5. HEADER
------------------------------- */
-header {
-  background-color: var(--colorWhite);
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
 }
 
-.headerContainer {
-  height: var(--headerHeight);
+/* Skip link — hidden until focused, sits ahead of the overlay nav in tab order */
+.skipLink {
+  position: absolute;
+  top: -48px;
+  left: 16px;
+  z-index: 10000;
+  background: var(--bone);
+  color: var(--ink);
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: top 0.2s ease;
+}
+
+.skipLink:focus {
+  top: 16px;
+}
+
+/* ==========================================================================
+   Editorial Full-Screen Hover Navigation
+   (site-wide — appears on every page)
+   ========================================================================== */
+
+.sideNav {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 48px;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
+  padding: 56px 0 64px 80px;
+
+  background: rgba(10, 10, 10, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+
+  transition:
+    width 0.70s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.50s ease,
+    backdrop-filter 0.50s ease,
+    -webkit-backdrop-filter 0.50s ease;
 }
 
-.navLinks {
+/* Expanded on hover AND keyboard focus. opacity:0 nav links are still
+   focusable, so without :focus-within a keyboard user tabs into an
+   invisible menu — this keeps the reveal in sync with focus order. */
+.sideNav:hover,
+.sideNav:focus-within {
+  width: min(600px, 55vw);
+  background: rgba(10, 10, 10, 0.22);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.navHandle {
+  position: absolute;
+  top: 50%;
+  left: 24px;
+  transform: translate(-50%, -50%) scale(1);
+  width: 48px;
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 40px;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.35s ease;
 }
 
-.navLink {
-  font-size: 12px;
-  font-weight: 500;
+.navHandle img {
+  width: 18px;
+  height: 18px;
+  display: block;
+  object-fit: contain;
+}
+
+.sideNav:hover .navHandle,
+.sideNav:focus-within .navHandle {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.75);
+}
+
+.navLogo {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition:
+    opacity 0.35s ease 0.15s,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+
+.navLogo img { height: 22px; width: auto; display: block; }
+
+.sideNav:hover .navLogo,
+.sideNav:focus-within .navLogo {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin: auto 0;
+}
+
+.navMenu a {
+  width: fit-content;
+  font-family: var(--font-body);
+  font-size: clamp(38px, 4.5vw, 64px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--bone);
+  letter-spacing: 0.02em;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-32px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.25s ease,
+    letter-spacing 0.25s ease;
+}
+
+.sideNav:hover .navMenu a,
+.sideNav:focus-within .navMenu a {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sideNav:hover .navMenu a:nth-child(1),
+.sideNav:focus-within .navMenu a:nth-child(1) { transition-delay: 0.22s, 0.22s, 0s, 0s; }
+.sideNav:hover .navMenu a:nth-child(2),
+.sideNav:focus-within .navMenu a:nth-child(2) { transition-delay: 0.28s, 0.28s, 0s, 0s; }
+.sideNav:hover .navMenu a:nth-child(3),
+.sideNav:focus-within .navMenu a:nth-child(3) { transition-delay: 0.34s, 0.34s, 0s, 0s; }
+.sideNav:hover .navMenu a:nth-child(4),
+.sideNav:focus-within .navMenu a:nth-child(4) { transition-delay: 0.40s, 0.40s, 0s, 0s; }
+
+.navMenu a:hover,
+.navMenu a:focus-visible {
+  color: var(--brass);
+  letter-spacing: 0.08em;
+  transform: translateX(12px);
+}
+
+.navMenu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 1px;
+  background: var(--brass);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navMenu a:hover::after,
+.navMenu a:focus-visible::after {
+  width: 100%;
+}
+
+.navMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  font-size: 11px;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  color: rgba(243, 241, 236, 0.45);
+  transition: opacity 0.35s ease 0.48s;
 }
 
-.logo img {
-  height: 22px;
-  width: auto;
+.sideNav:hover .navMeta,
+.sideNav:focus-within .navMeta {
+  opacity: 1;
 }
 
-/* -----------------------------
-   6. FOOTER
------------------------------- */
+/* Header shell (site-wide — sits above whatever page content follows) */
+
+header {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding-top: 32px;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(to bottom, rgba(10, 9, 8, 0.45), rgba(10, 9, 8, 0));
+  pointer-events: none;
+  z-index: -1;
+}
+
+.headerInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 64px;
+}
+
+.logo img { display: block; height: 32px; width: auto; }
+
+/* Footer (site-wide) */
+
 footer {
+  background: var(--bone);
+  border-top: 1px solid rgba(18, 17, 16, 0.1);
   padding: 64px 0 32px;
 }
 
 .footerContainer {
   display: flex;
   justify-content: space-between;
-  gap: 32px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 48px;
   padding-bottom: 48px;
 }
 
-.logoAlt img {
-  height: 112px;
-  width: auto;
-}
+.logoAlt img { display: block; height: 22px; width: auto; }
 
-.footerNavLinks {
-  display: flex;
-  gap: 64px;
-}
+.footerNavLinks { display: flex; gap: 64px; }
 
 .footerNavGroup {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .footerLabel {
   font-size: 11px;
   font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--colorGrey);
+  color: var(--stone);
   margin-bottom: 4px;
 }
 
 .footerLink {
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  font-size: 14px;
+  color: var(--ink);
+  width: fit-content;
 }
+
+.footerLink:hover,
+.footerLink:focus-visible { color: var(--brass); }
 
 .footerBottom {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
   padding-top: 24px;
-  border-top: var(--borderLight);
+  border-top: 1px solid rgba(18, 17, 16, 0.1);
 }
 
-.footerCopyright {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--colorGrey);
+.footerCopyright { font-size: 12px; color: var(--stone); margin: 0; }
+
+.footerSocials { display: flex; gap: 24px; }
+
+.socialLink { font-size: 12px; color: var(--stone); }
+
+.socialLink:hover,
+.socialLink:focus-visible { color: var(--brass); }
+
+/* Shared responsive rules (header/footer/container — layout-agnostic,
+   used by every page) */
+
+@media (max-width: 860px) {
+  .container { padding: 0 24px; }
+  header { padding-top: 20px; }
+  .footerNavLinks { gap: 40px; }
 }
 
-.footerSocials {
-  display: flex;
-  gap: 24px;
-}
-
-.socialLink {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
+@media (max-width: 700px) {
+  .footerContainer { flex-direction: column; gap: 32px; }
 }

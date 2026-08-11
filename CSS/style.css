@@ -19,6 +19,8 @@ html { scroll-behavior: smooth; }
   * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
+
+
 body {
   margin: 0;
   font-family: var(--font-body);
@@ -192,6 +194,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .navMenu a::after {
+  
   content: "";
   position: absolute;
   left: 0;
@@ -336,4 +339,105 @@ footer {
 
 @media (max-width: 700px) {
   .footerContainer { flex-direction: column; gap: 32px; }
+}
+/* ==========================================================================
+   Product Page Layout (DIALGA Watches)
+   ========================================================================== */
+
+.productSection {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  padding: 80px 0;
+}
+
+.productBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.productBlock:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.productImage {
+  flex: 1;
+  max-width: 480px;
+  border: 1px solid rgba(18, 17, 16, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bone);
+}
+
+.productImage img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.productDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.productName {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0;
+}
+
+.productDescription {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--charcoal);
+}
+
+.productButton {
+  width: fit-content;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--bone);
+  background: var(--brass);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background =0.3s ease, transform 0.2s ease;
+}
+
+.productButton:hover,
+.productButton:focus-visible {
+  background: var(--brass-light);
+  transform: translateY(-2px);
+}
+
+/* Related Images Section */
+.relatedImages {
+  display: flex;
+  gap: 24px;
+  margin-top: 64px;
+}
+
+.relatedImages img {
+  flex: 1;
+  max-width: 100%;
+  border-radius: 6px;
+  border: 1px solid rgba(18, 17, 16, 0.1);
+  background: var(--bone);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 860px) {
+  .productBlock {
+    flex-direction: column;
+    gap: 32px;
+  }
 }

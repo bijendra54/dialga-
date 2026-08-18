@@ -1,0 +1,927 @@
+:root {
+  --ink: #121110;
+  --bone: #F3F1EC;
+  --charcoal: #1A1815;
+  --brass: #A98454;
+  --brass-light: #B08D57;
+  --stone: #8C877D;
+
+  --font-display: 'Abril Fatface', Georgia, serif;
+  --font-body: 'Manrope', sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--bone);
+}
+
+a { text-decoration: none; color: inherit; }
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+/* Skip link — hidden until focused, sits ahead of the overlay nav in tab order */
+.skipLink {
+  position: absolute;
+  top: -48px;
+  left: 16px;
+  z-index: 10000;
+  background: var(--bone);
+  color: var(--ink);
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: top 0.2s ease;
+}
+
+.skipLink:focus {
+  top: 16px;
+}
+
+/* ==========================================================================
+   Editorial Full-Screen Hover Navigation
+   (site-wide — appears on every page)
+   ========================================================================== */
+
+.sideNav {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 48px;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 56px 0 64px 80px;
+
+  background: rgba(10, 10, 10, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+
+  transition:
+    width 0.70s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.50s ease,
+    backdrop-filter 0.50s ease,
+    -webkit-backdrop-filter 0.50s ease;
+}
+
+/* Expanded on hover AND keyboard focus. opacity:0 nav links are still
+   focusable, so without :focus-within a keyboard user tabs into an
+   invisible menu — this keeps the reveal in sync with focus order. */
+.sideNav:hover,
+.sideNav:focus-within {
+  width: min(600px, 55vw);
+  background: rgba(10, 10, 10, 0.22);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.navHandle {
+  position: absolute;
+  top: 50%;
+  left: 24px;
+  transform: translate(-50%, -50%) scale(1);
+  width: 48px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.35s ease;
+}
+
+.navHandle img {
+  width: 18px;
+  height: 18px;
+  display: block;
+  object-fit: contain;
+}
+
+.sideNav:hover .navHandle,
+.sideNav:focus-within .navHandle {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.75);
+}
+
+.navLogo {
+  opacity: 0;
+  transform: translateY(-12px);
+  transition:
+    opacity 0.35s ease 0.15s,
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+
+.navLogo img { height: 22px; width: auto; display: block; }
+
+.sideNav:hover .navLogo,
+.sideNav:focus-within .navLogo {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.navMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  margin: auto 0;
+}
+
+.navMenu a {
+  width: fit-content;
+  font-family: var(--font-body);
+  font-size: clamp(38px, 4.5vw, 64px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--bone);
+  letter-spacing: 0.02em;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-32px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.25s ease,
+    letter-spacing 0.25s ease;
+}
+
+.sideNav:hover .navMenu a,
+.sideNav:focus-within .navMenu a {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.sideNav:hover .navMenu a:nth-child(1),
+.sideNav:focus-within .navMenu a:nth-child(1) { transition-delay: 0.22s, 0.22s, 0s, 0s; }
+.sideNav:hover .navMenu a:nth-child(2),
+.sideNav:focus-within .navMenu a:nth-child(2) { transition-delay: 0.28s, 0.28s, 0s, 0s; }
+.sideNav:hover .navMenu a:nth-child(3),
+.sideNav:focus-within .navMenu a:nth-child(3) { transition-delay: 0.34s, 0.34s, 0s, 0s; }
+.sideNav:hover .navMenu a:nth-child(4),
+.sideNav:focus-within .navMenu a:nth-child(4) { transition-delay: 0.40s, 0.40s, 0s, 0s; }
+
+.navMenu a:hover,
+.navMenu a:focus-visible {
+  color: var(--brass);
+  letter-spacing: 0.08em;
+  transform: translateX(12px);
+}
+
+.navMenu a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 1px;
+  background: var(--brass);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navMenu a:hover::after,
+.navMenu a:focus-visible::after {
+  width: 100%;
+}
+
+.navMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0;
+  font-size: 11px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(243, 241, 236, 0.45);
+  transition: opacity 0.35s ease 0.48s;
+}
+
+.sideNav:hover .navMeta,
+.sideNav:focus-within .navMeta {
+  opacity: 1;
+}
+
+/* Header shell (site-wide — sits above whatever page content follows) */
+
+header {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  padding-top: 32px;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 160px;
+  background: linear-gradient(to bottom, rgba(10, 9, 8, 0.45), rgba(10, 9, 8, 0));
+  pointer-events: none;
+  z-index: -1;
+}
+
+.headerInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 64px;
+}
+
+.logo img { display: block; height: 32px; width: auto; }
+
+/* Footer (site-wide) */
+
+footer {
+  background: var(--bone);
+  border-top: 1px solid rgba(18, 17, 16, 0.1);
+  padding: 64px 0 32px;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 48px;
+  padding-bottom: 48px;
+}
+
+.logoAlt img { display: block; height: 100px; width: auto; }
+
+.footerNavLinks { display: flex; gap: 64px; }
+
+.footerNavGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footerLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 4px;
+}
+
+.footerLink {
+  font-size: 14px;
+  color: var(--ink);
+  width: fit-content;
+}
+
+.footerLink:hover,
+.footerLink:focus-visible { color: var(--brass); }
+
+.footerBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(18, 17, 16, 0.1);
+}
+
+.footerCopyright { font-size: 12px; color: var(--stone); margin: 0; }
+
+.footerSocials { display: flex; gap: 24px; }
+
+.socialLink { font-size: 12px; color: var(--stone); }
+
+.socialLink:hover,
+.socialLink:focus-visible { color: var(--brass); }
+
+/* Shared responsive rules (header/footer/container — layout-agnostic,
+   used by every page) */
+
+@media (max-width: 860px) {
+  .container { padding: 0 24px; }
+  header { padding-top: 20px; }
+  .footerNavLinks { gap: 40px; }
+}
+
+@media (max-width: 700px) {
+  .footerContainer { flex-direction: column; gap: 32px; }
+}
+
+/* ==========================================================================
+   Product Page Layout (DIALGA Watches)
+   ========================================================================== */
+
+.productSection {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  padding: 80px 0;
+}
+
+.productBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.productBlock:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.productImage {
+  flex: 1;
+  max-width: 480px;
+  border: 1px solid rgba(18, 17, 16, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--bone);
+}
+
+.productImage img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.productDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.productName {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0;
+}
+
+.productDescription {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--charcoal);
+}
+
+.productButton {
+  width: fit-content;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--bone);
+  background: var(--brass);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.productButton:hover,
+.productButton:focus-visible {
+  background: var(--brass-light);
+  transform: translateY(-2px);
+}
+
+/* Related Images Section */
+.relatedImages {
+  display: flex;
+  gap: 24px;
+  margin-top: 64px;
+}
+
+.relatedImages img {
+  flex: 1;
+  max-width: 100%;
+  border-radius: 6px;
+  border: 1px solid rgba(18, 17, 16, 0.1);
+  background: var(--bone);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 860px) {
+  .productBlock {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+/* ==========================================================================
+   Index-page-only styles. Only rules shared across pages (header shell,
+   footer, side nav, tokens, fonts) live in css/style.css.
+   ========================================================================== */
+
+/* ============================== HERO ============================== */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 620px;
+  width: 100%;
+  overflow: hidden;
+  background: var(--charcoal);
+}
+
+.heroImage { position: absolute; inset: 0; z-index: 0; }
+
+.heroImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0% center;
+  display: block;
+}
+
+/* Film-grain: a faint fractal-noise texture over the photo, blended
+   with overlay so it reads as print-grade grain rather than digital
+   flatness. Cheap in bytes (inline SVG), no image request. */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Safety-net scrim: soft bone gradient between photo and text at all
+   desktop widths, so legibility doesn't depend on the specific crop. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to right,
+    rgba(243, 241, 236, 0) 52%,
+    rgba(243, 241, 236, 0.55) 70%,
+    rgba(243, 241, 236, 0.92) 100%
+  );
+  pointer-events: none;
+}
+
+.heroContent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  z-index: 3;
+  width: clamp(300px, 34vw, 460px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(32px, 5vw, 56px) 96px 16px;
+}
+
+/* Staggered entrance — respects prefers-reduced-motion via the global
+   "* { animation-duration: 0.01ms !important }" rule in style.css. */
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.heroKicker, .heroHeadline, .heroSubtext, .heroCta, .heroRef, .heroScrollCue {
+  animation: heroReveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.heroRef        { animation-delay: 0.05s; }
+.heroKicker     { animation-delay: 0.15s; }
+.heroHeadline   { animation-delay: 0.30s; }
+.heroSubtext    { animation-delay: 0.48s; }
+.heroCta        { animation-delay: 0.62s; }
+.heroScrollCue  { animation-delay: 0.80s; }
+
+.heroKicker {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 16px;
+}
+
+.heroHeadline {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(34px, 4.2vw, 68px);
+  line-height: 1.06;
+  margin: 0 0 22px;
+  color: var(--ink);
+}
+
+.heroSubtext {
+  font-size: 16px;
+  line-height: 1.65;
+  color: #3A3733;
+  margin: 0 0 28px;
+  max-width: 34ch;
+}
+
+.heroCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ink);
+  transition: gap 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.heroCta:hover, .heroCta:focus-visible {
+  gap: 16px;
+  color: var(--brass);
+  border-color: var(--brass);
+}
+
+.heroCta svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Ledger plate — every section on this page carries one of these,
+   echoing the fact that every DIALGA case is individually referenced.
+   It's the one recurring device that's actually true of the product. */
+.heroRef {
+  position: absolute;
+  left: 64px;
+  bottom: 120px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(243, 241, 236, 0.75);
+}
+
+.heroRef::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--brass-light);
+}
+
+.heroScrollCue {
+  position: absolute;
+  left: 64px;
+  bottom: 48px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(243, 241, 236, 0.6);
+}
+
+.heroScrollCue span {
+  display: block;
+  width: 1px;
+  height: 28px;
+  background: rgba(243, 241, 236, 0.6);
+  animation: scrollLine 2.2s ease-in-out infinite;
+  transform-origin: top;
+}
+
+@keyframes scrollLine {
+  0%   { transform: scaleY(0); opacity: 0; }
+  35%  { transform: scaleY(1); opacity: 1; }
+  70%  { transform: scaleY(1); opacity: 0.4; }
+  100% { transform: scaleY(0); opacity: 0; }
+}
+
+@media (max-width: 700px) {
+  .heroImage img { object-position: 32% center; }
+
+  /* Repurpose the desktop light scrim (.hero::before) as a dark
+     bottom-up scrim on mobile, rather than introducing a second
+     pseudo-element — same slot, different gradient. */
+  .hero::before {
+    background: linear-gradient(to top, rgba(10, 9, 8, 0.72) 0%, rgba(10, 9, 8, 0.28) 45%, rgba(10, 9, 8, 0) 68%);
+  }
+
+  .heroContent {
+    top: auto; bottom: 0; right: 0; left: 0;
+    width: auto; height: auto;
+    padding: 0 24px 48px;
+    z-index: 3;
+  }
+
+  .heroKicker { color: #D9B27C; }
+  .heroHeadline { color: var(--bone); font-size: clamp(34px, 10vw, 48px); }
+  .heroSubtext { color: rgba(243, 241, 236, 0.78); max-width: none; }
+  .heroCta { color: var(--bone); border-color: var(--bone); }
+  .heroCta:hover, .heroCta:focus-visible { color: var(--brass-light); border-color: var(--brass-light); }
+
+  .heroRef, .heroScrollCue { display: none; }
+}
+
+/* ========================= SHARED SECTION SHELL ========================= */
+
+.section {
+  padding: 128px 0;
+  position: relative;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.section.isVisible { opacity: 1; transform: translateY(0); }
+
+.section--dark { background: var(--charcoal); color: var(--bone); }
+.section--light { background: var(--bone); color: var(--ink); }
+
+.sectionRef {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  margin: 0 0 28px;
+}
+
+.sectionRef::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: var(--brass);
+}
+
+.section--dark .sectionRef { color: rgba(243, 241, 236, 0.65); }
+.section--light .sectionRef { color: var(--stone); }
+
+@media (max-width: 700px) {
+  .section { padding: 80px 0; }
+}
+
+/* ============================== ATELIER ============================== */
+
+.atelierGrid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.atelierQuote {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(26px, 2.6vw, 40px);
+  line-height: 1.3;
+  color: var(--bone);
+  margin: 0 0 28px;
+  max-width: 18ch;
+}
+
+.atelierBody {
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(243, 241, 236, 0.72);
+  max-width: 46ch;
+  margin: 0 0 48px;
+}
+
+.statRow {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(243, 241, 236, 0.16);
+  padding-top: 28px;
+}
+
+.statItem { min-width: 120px; }
+
+.statNumber {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--brass-light);
+  margin-bottom: 6px;
+}
+
+.statLabel {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(243, 241, 236, 0.55);
+}
+
+.atelierImage {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid var(--brass);
+}
+
+.atelierImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: sepia(0.18) saturate(1.05);
+  padding: 5px;
+}
+
+@media (max-width: 860px) {
+  .atelierGrid { grid-template-columns: 1fr; gap: 40px; }
+  .atelierImage { order: -1; aspect-ratio: 16 / 10; }
+}
+
+/* ============================== ANATOMY ============================== */
+
+.anatomyHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 64px;
+}
+
+.anatomyHeading {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3vw, 44px);
+  margin: 0;
+  color: var(--ink);
+}
+
+.anatomyIntro {
+  font-size: 15px;
+  color: var(--stone);
+  max-width: 30ch;
+  margin: 0;
+}
+
+.specStrip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(18, 17, 16, 0.12);
+}
+
+.specItem {
+  padding: 32px 28px 0 0;
+  border-left: 1px solid rgba(18, 17, 16, 0.12);
+  padding-left: 28px;
+}
+
+.specItem:first-child { border-left: none; padding-left: 0; }
+
+.specLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin: 0 0 14px;
+}
+
+.specText {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #3A3733;
+  margin: 0;
+}
+
+@media (max-width: 860px) {
+  .specStrip { grid-template-columns: 1fr 1fr; }
+  .specItem:nth-child(3) { border-left: none; padding-left: 0; }
+  .specItem:nth-child(1), .specItem:nth-child(2), .specItem:nth-child(3), .specItem:nth-child(4) {
+    border-top: 1px solid rgba(18, 17, 16, 0.12);
+    padding-top: 24px;
+    margin-top: 24px;
+  }
+  .specItem:nth-child(1), .specItem:nth-child(2) { border-top: none; margin-top: 0; }
+}
+
+@media (max-width: 560px) {
+  .specStrip { grid-template-columns: 1fr; }
+  .specItem { border-left: none !important; padding-left: 0 !important; }
+  .specItem:not(:first-child) { border-top: 1px solid rgba(18, 17, 16, 0.12); padding-top: 24px; margin-top: 24px; }
+}
+
+/* ============================== FEATURED ============================== */
+
+.featuredGrid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 72px;
+  align-items: center;
+}
+
+.featuredImage {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid var(--brass);
+}
+
+.featuredImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  padding: 5px;
+}
+
+.featuredName {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(30px, 3.4vw, 48px);
+  margin: 0 0 20px;
+  color: var(--bone);
+}
+
+.featuredBody {
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(243, 241, 236, 0.72);
+  max-width: 42ch;
+  margin: 0 0 32px;
+}
+
+.featuredMeta {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 36px;
+}
+
+.featuredPrice {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--brass-light);
+}
+
+.featuredCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--bone);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--bone);
+  transition: gap 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.featuredCta:hover, .featuredCta:focus-visible {
+  gap: 16px;
+  color: var(--brass-light);
+  border-color: var(--brass-light);
+}
+
+.featuredCta svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+@media (max-width: 860px) {
+  .featuredGrid { grid-template-columns: 1fr; gap: 40px; }
+  .featuredImage { aspect-ratio: 16 / 10; }
+}

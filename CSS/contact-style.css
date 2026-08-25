@@ -1,0 +1,545 @@
+/* -----------------------------
+   1. RESET
+------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--fontdisplay);
+  font-weight: 400; /* Abril Fatface ships as a single weight */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+}
+
+/* -----------------------------
+   2. ROOT VARIABLES
+------------------------------ */
+:root {
+  /* Colors */
+  --colorWhite: #ffffff;
+  --colorBlack: #000000;
+  --colorGrey: #757575;
+
+  /* Fonts */
+  --fontDisplay: "Abril Fatface", "Times New Roman", serif;
+  --fontBody: "Manrope", "Helvetica Neue", Arial, sans-serif;
+
+  /* Layout */
+  --maxWidth: 1440px;
+  --gutter: 32px;
+  --border: 1px solid var(--colorBlack);
+  --borderLight: 1px solid #e0e0e0;
+  --headerHeight: 88px;
+}
+
+/* -----------------------------
+   3. PAGE SETUP
+------------------------------ */
+body {
+  background-color: var(--colorWhite);
+  color: var(--colorBlack);
+  font-family: var(--fontBody);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* -----------------------------
+   4. CONTAINER
+------------------------------ */
+.container {
+  width: 100%;
+  max-width: var(--maxWidth);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* -----------------------------
+   5. HEADER
+------------------------------ */
+header {
+  background-color: var(--colorWhite);
+  position: sticky;
+  z-index: 10000;
+  top:0;
+}
+
+.headerContainer {
+  height: var(--headerHeight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navLink {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.logo img {
+  height: 22px;
+  width: auto;
+}
+
+/* -----------------------------
+   6. FOOTER
+------------------------------ */
+footer {
+  padding: 64px 0 32px;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 48px;
+}
+
+.logoAlt img {
+  height: 112px;
+  width: auto;
+}
+
+.footerNavLinks {
+  display: flex;
+  gap: 64px;
+}
+
+.footerNavGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footerLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--colorGrey);
+  margin-bottom: 4px;
+}
+
+.footerLink {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.footerBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: var(--borderLight);
+}
+
+.footerCopyright {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--colorGrey);
+}
+
+.footerSocials {
+  display: flex;
+  gap: 24px;
+}
+
+.socialLink {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* =========================================================
+   CONTACT PAGE
+========================================================= */
+
+.contact-page {
+  background-color: var(--colorWhite);
+  color: var(--colorBlack);
+  font-family: var(--fontBody);
+}
+
+
+/* -----------------------------
+   CONTACT HERO
+------------------------------ */
+
+.contact-hero {
+  min-height: 520px;
+
+  background-color: var(--colorBlack);
+  color: var(--colorWhite);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  padding: 100px var(--gutter);
+}
+
+.contact-hero-content {
+  max-width: 850px;
+}
+
+.contact-label {
+  color: #c9a227;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+
+  margin-bottom: 24px;
+}
+
+.contact-hero h1 {
+  font-family: var(--fontDisplay);
+
+  font-size: clamp(52px, 7vw, 88px);
+  font-weight: 400;
+
+  line-height: 1.05;
+
+  margin-bottom: 28px;
+}
+
+.contact-intro {
+  max-width: 600px;
+
+  margin: 0 auto;
+
+  color: #b5b5b5;
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+
+/* -----------------------------
+   CONTACT SECTION
+------------------------------ */
+
+.contact-section {
+  max-width: var(--maxWidth);
+
+  margin: 0 auto;
+
+  padding: 110px var(--gutter);
+
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+
+  gap: 100px;
+}
+
+
+/* -----------------------------
+   CONTACT INFO
+------------------------------ */
+
+.contact-info h2 {
+  font-family: var(--fontDisplay);
+
+  font-size: 52px;
+  font-weight: 400;
+
+  line-height: 1.1;
+
+  margin-bottom: 25px;
+}
+
+.contact-description {
+  max-width: 430px;
+
+  color: var(--colorGrey);
+
+  font-size: 14px;
+  line-height: 1.9;
+
+  margin-bottom: 50px;
+}
+
+.contact-details {
+  display: flex;
+  flex-direction: column;
+
+  gap: 28px;
+}
+
+.contact-detail {
+  padding-bottom: 24px;
+
+  border-bottom: var(--borderLight);
+}
+
+.contact-detail span {
+  display: block;
+
+  color: #c9a227;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.2em;
+
+  margin-bottom: 8px;
+}
+
+.contact-detail p {
+  font-size: 14px;
+}
+
+
+/* -----------------------------
+   CONTACT FORM
+------------------------------ */
+
+.contact-form {
+  padding: 50px;
+
+  background-color: #f7f7f7;
+
+  border-top: 3px solid #c9a227;
+}
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 28px;
+}
+
+.form-group label {
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.15em;
+
+  margin-bottom: 10px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+
+  padding: 14px 0;
+
+  background-color: transparent;
+
+  border: none;
+  border-bottom: 1px solid #cfcfcf;
+
+  outline: none;
+
+  font-family: var(--fontBody);
+  font-size: 14px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-bottom-color: #c9a227;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #999;
+}
+
+
+/* -----------------------------
+   CONTACT BUTTON
+------------------------------ */
+
+.contact-button {
+  padding: 16px 30px;
+
+  background-color: var(--colorBlack);
+  color: var(--colorWhite);
+
+  font-family: var(--fontBody);
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+}
+
+.contact-button:hover {
+  background-color: #c9a227;
+  color: var(--colorBlack);
+}
+
+
+/* -----------------------------
+   SHOWROOM
+------------------------------ */
+
+.contact-showroom {
+  min-height: 500px;
+
+  background-color: var(--colorBlack);
+  color: var(--colorWhite);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  padding: 100px var(--gutter);
+}
+
+.showroom-content {
+  max-width: 700px;
+}
+
+.showroom-content h2 {
+  font-family: var(--fontDisplay);
+
+  font-size: 60px;
+  font-weight: 400;
+
+  line-height: 1.05;
+
+  margin-bottom: 25px;
+}
+
+.showroom-content p:not(.contact-label) {
+  max-width: 500px;
+
+  margin: 0 auto 35px;
+
+  color: #b5b5b5;
+
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.contact-outline-button {
+  display: inline-block;
+
+  padding: 15px 28px;
+
+  border: 1px solid #c9a227;
+
+  color: #c9a227;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.15em;
+
+  transition: 0.3s ease;
+}
+
+.contact-outline-button:hover {
+  background-color: #c9a227;
+  color: var(--colorBlack);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .contact-section {
+    grid-template-columns: 1fr;
+
+    gap: 70px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .contact-hero {
+    min-height: 450px;
+    padding: 80px 24px;
+  }
+
+  .contact-section {
+    padding: 75px 24px;
+  }
+
+  .contact-info h2 {
+    font-size: 42px;
+  }
+
+  .contact-form {
+    padding: 35px 25px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .showroom-content h2 {
+    font-size: 45px;
+  }
+
+}

@@ -1,0 +1,203 @@
+/* =========================================================
+   Product Detail — extends product-style.css tokens
+   (--ink, --bone, --charcoal, --brass, --brass-light, --stone, --grey)
+========================================================= */
+
+.breadcrumb {
+  margin-top: 120px;
+  padding: 32px 0 0;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--stone);
+}
+
+.breadcrumb a {
+  color: var(--stone);
+}
+
+.breadcrumb a:hover {
+  color: var(--brass);
+}
+
+.breadcrumb span {
+  color: var(--ink);
+}
+
+/* ---------- Hero block ---------- */
+.detailSection {
+  padding: 48px 0 120px;
+}
+
+.detailBlock {
+  display: flex;
+  align-items: flex-start;
+  gap: 80px;
+}
+
+.detailImage {
+  flex: 1;
+  position: sticky;
+  top: 140px;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--brass);
+  padding: 1px;
+  background: var(--bone);
+}
+
+.detailImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.detailInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-top: 8px;
+}
+
+.detailEyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--brass);
+}
+
+.detailName {
+  font-size: clamp(32px, 4vw, 52px);
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.detailPrice {
+  font-family: var(--font-body);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.detailPrice span {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--stone);
+  margin-left: 10px;
+}
+
+.detailDescription {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink);
+  max-width: 46ch;
+}
+
+.detailDivider {
+  width: 100%;
+  height: 1px;
+  background: var(--border-light);
+  border: none;
+}
+
+/* ---------- Spec list ---------- */
+.detailSpecs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.detailSpecRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+}
+
+.detailSpecLabel {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--stone);
+}
+
+.detailSpecValue {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---------- Actions ---------- */
+.detailActions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.btnPrimary,
+.btnSecondary {
+  flex: 1;
+  padding: 16px 24px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+}
+
+.btnPrimary {
+  color: var(--bone);
+  background: var(--brass);
+  border: 1px solid var(--brass);
+}
+
+.btnPrimary:hover,
+.btnPrimary:focus-visible {
+  background: var(--brass-light);
+  border-color: var(--brass-light);
+  transform: translateY(-2px);
+}
+
+.btnSecondary {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid var(--ink);
+}
+
+.btnSecondary:hover,
+.btnSecondary:focus-visible {
+  background: var(--ink);
+  color: var(--bone);
+  transform: translateY(-2px);
+}
+
+.detailNote {
+  font-size: 12px;
+  color: var(--stone);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .detailBlock {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .detailImage {
+    position: static;
+    width: 100%;
+  }
+
+  .detailActions {
+    flex-direction: column;
+  }
+}

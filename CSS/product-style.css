@@ -1,0 +1,356 @@
+/* =========================================================
+   Reset
+========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+}
+
+/* =========================================================
+   Variables
+========================================================= */
+:root {
+  --ink: #121110;
+  --bone: #F3F1EC;
+  --charcoal: #1A1815;
+  --brass: #A98454;
+  --brass-light: #B08D57;
+  --stone: #8C877D;
+  --grey: #757575;
+  --border-light: rgba(18, 17, 16, 0.1);
+
+  --font-display: 'Abril Fatface', Georgia, serif;
+  --font-body: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* =========================================================
+   Base
+========================================================= */
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+  background: #fff;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* =========================================================
+   Header
+========================================================= */
+header {
+  position: absolute;
+  margin-bottom: 120px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  position: sticky;
+  padding-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-bottom:1px solid  #cecece;
+}
+
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 160px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.headerContainer {
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navLink {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.logo img {
+  height: 22px;
+  width: auto;
+}
+
+
+
+/* =========================================================
+   Footer
+========================================================= */
+footer {
+  background: var(--bone);
+  border-top: 1px solid var(--border-light);
+  padding: 64px 0 32px;
+}
+
+.footerContainer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 32px;
+  padding-bottom: 48px;
+}
+
+.logoAlt img {
+  height: 112px;
+  width: auto;
+}
+
+.footerNavLinks {
+  display: flex;
+  gap: 64px;
+}
+
+.footerNavGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footerLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--grey);
+  margin-bottom: 4px;
+}
+
+.footerLink {
+  width: fit-content;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+
+.footerLink:hover,
+.footerLink:focus-visible {
+  color: var(--brass);
+}
+
+.footerBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.footerCopyright {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--grey);
+}
+
+.footerSocials {
+  display: flex;
+  gap: 24px;
+}
+
+.socialLink {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--stone);
+}
+
+.socialLink:hover,
+.socialLink:focus-visible {
+  color: var(--brass);
+}
+
+/* =========================================================
+   Product Section
+========================================================= */
+.productSection {
+  margin-top: 120px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.productWrap {
+  width: 100%;
+  background: var(--bone);
+  color: var(--ink);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.productWrap:nth-child(odd) {
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.productWrap:nth-child(even) {
+  background: var(--bone);
+  color: var(--ink);
+}
+
+.productBlock {
+  padding: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.productBlock:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+.productImage {
+  flex: 1;
+  width: 480px;
+  max-width: 480px;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--brass);
+
+  padding: 1px;
+}
+
+.productImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.productDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.productName {
+  font-size: clamp(28px, 3vw, 42px);
+  color: inherit;
+}
+
+.productDescription {
+  line-height: 1.6;
+  color: inherit;
+}
+
+.productButton {
+  width: fit-content;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--bone);
+  background: var(--brass);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.productButton:hover,
+.productButton:focus-visible {
+  background: var(--brass-light);
+  transform: translateY(-2px);
+}
+
+.relatedImages {
+  display: flex;
+  gap: 24px;
+  margin-top: 64px;
+}
+
+.relatedImages img {
+  flex: 1;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  background: var(--bone);
+}
+
+/* =========================================================
+   Responsive
+========================================================= */
+@media (max-width: 860px) {
+  .container {
+    padding: 0 24px;
+  }
+
+  header {
+    padding-top: 20px;
+  }
+
+  .footerNavLinks {
+    gap: 40px;
+  }
+
+  .productBlock {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .productImage {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .footerContainer {
+    flex-direction: column;
+    gap: 32px;
+  }
+}

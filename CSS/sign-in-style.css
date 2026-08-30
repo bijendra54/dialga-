@@ -217,17 +217,64 @@ footer {
 /* -----------------------------
    8. SIGN-IN / SIGN-UP
 ------------------------------ */
+
+/* Dark-surface tokens — the base file only defines colorWhite/Black/Grey,
+   which aren't enough contrast range for a dark card. Scoped here rather
+   than added to the global :root above, since nothing else on the site
+   uses them yet. */
+:root {
+  --colorCharcoal: #1a1815;
+  --colorCharcoalLine: rgba(255, 255, 255, 0.16);
+  --colorCharcoalLineHover: rgba(255, 255, 255, 0.4);
+  --colorMuted: #a39e94;
+}
+
 .authSection {
+  min-height: calc(100vh - var(--headerHeight));
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 96px 0 140px;
+  padding: 48px var(--gutter);
 }
 
 .authCard {
   width: 100%;
-  max-width: 420px;
+  max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+}
+
+.authImage {
+  position: relative;
+  flex: 0 0 30%;
+}
+
+.authImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.authImageCaption {
+  position: absolute;
+  left: 24px;
+  bottom: 24px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--colorWhite);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+}
+
+.authFormPanel {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 56px 96px;
+  background: var(--colorCharcoal);
+  color: var(--colorWhite);
 }
 
 .authEyebrow {
@@ -238,7 +285,7 @@ footer {
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--colorGrey);
+  color: var(--colorMuted);
 }
 
 .authEyebrow::before {
@@ -248,7 +295,7 @@ footer {
   left: 0;
   width: 32px;
   height: 1px;
-  background: var(--colorBlack);
+  background: var(--colorWhite);
 }
 
 /* Toggle: two text tabs over a hairline track, a solid indicator slides between them */
@@ -258,7 +305,7 @@ footer {
   display: flex;
   gap: 32px;
   margin-bottom: 40px;
-  border-bottom: var(--borderLight);
+  border-bottom: 1px solid var(--colorCharcoalLine);
 }
 
 .authToggleBtn {
@@ -267,18 +314,18 @@ footer {
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--colorGrey);
+  color: var(--colorMuted);
   cursor: pointer;
   transition: color 0.25s ease;
 }
 
 .authToggleBtn.is-active {
-  color: var(--colorBlack);
+  color: var(--colorWhite);
 }
 
 .authToggleBtn:hover,
 .authToggleBtn:focus-visible {
-  color: var(--colorBlack);
+  color: var(--colorWhite);
 }
 
 .authToggleIndicator {
@@ -287,21 +334,22 @@ footer {
   left: 0;
   height: 1px;
   width: 64px;
-  background: var(--colorBlack);
+  background: var(--colorWhite);
   transition: transform 0.4s ease, width 0.4s ease;
 }
 
 .authHeading {
   margin: 0 0 12px;
-  font-size: clamp(30px, 4vw, 40px);
+  font-size: clamp(28px, 4vw, 36px);
   line-height: 1.15;
+  color: var(--colorWhite);
 }
 
 .authSubtext {
   margin: 0 0 36px;
   font-size: 14px;
   line-height: 1.6;
-  color: var(--colorGrey);
+  color: var(--colorMuted);
   max-width: 38ch;
 }
 
@@ -321,31 +369,33 @@ footer {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--colorGrey);
+  color: var(--colorMuted);
 }
 
 .authField input {
   display: block;
   width: 100%;
-  padding: 12px 2px;
+  padding: 8px 2px;
   font-size: 15px;
+  color: var(--colorWhite);
   background: transparent;
-  border-bottom: 1px solid #cccccc;
+  border-bottom: 1px solid var(--colorCharcoalLine);
   border-radius: 0;
   transition: border-color 0.25s ease;
 }
 
 .authField input::placeholder {
-  color: #aaaaaa;
+  color: var(--colorMuted);
+  opacity: 0.6;
 }
 
 .authField input:hover {
-  border-color: var(--colorGrey);
+  border-color: var(--colorCharcoalLineHover);
 }
 
 .authField input:focus-visible {
   outline: none;
-  border-color: var(--colorBlack);
+  border-color: var(--colorWhite);
 }
 
 .authForgot {
@@ -355,12 +405,12 @@ footer {
   font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--colorGrey);
+  color: var(--colorMuted);
 }
 
 .authForgot:hover,
 .authForgot:focus-visible {
-  color: var(--colorBlack);
+  color: var(--colorWhite);
 }
 
 .authSubmit {
@@ -370,27 +420,27 @@ footer {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--colorWhite);
-  background: var(--colorBlack);
+  color: var(--colorCharcoal);
+  background: var(--colorWhite);
   cursor: pointer;
   transition: background 0.25s ease;
 }
 
 .authSubmit:hover,
 .authSubmit:focus-visible {
-  background: var(--colorGrey);
+  background: var(--colorMuted);
 }
 
 .authSwitch {
   margin: 28px 0 0;
   text-align: center;
   font-size: 13px;
-  color: var(--colorGrey);
+  color: var(--colorMuted);
 }
 
 .authSwitchLink {
   font-weight: 600;
-  color: var(--colorBlack);
+  color: var(--colorWhite);
   text-underline-offset: 3px;
   text-decoration: underline;
   cursor: pointer;
@@ -398,7 +448,7 @@ footer {
 
 .authSwitchLink:hover,
 .authSwitchLink:focus-visible {
-  color: var(--colorGrey);
+  color: var(--colorMuted);
 }
 
 /* -----------------------------
@@ -406,10 +456,12 @@ footer {
 ------------------------------ */
 @media (max-width: 860px) {
   .footerNavLinks { gap: 40px; }
+  .authCard { flex-direction: column; }
+  .authImage { flex-basis: auto; max-width: 100%; min-height: 200px; }
 }
 
 @media (max-width: 700px) {
   .footerContainer { flex-direction: column; gap: 32px; }
-  .authSection { padding: 64px 0 96px; }
+  .authFormPanel { padding: 44px 28px; }
   .authToggle { gap: 24px; }
 }

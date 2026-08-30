@@ -1,56 +1,212 @@
-:root {
-  --ink: #121110;
-  --bone: #F3F1EC;
-  --charcoal: #1A1815;
-  --brass: #A98454;
-  --brass-light: #B08D57;
-  --stone: #8C877D;
+/* =========================================================
+   DIALGA — Sign-in / Sign-up Stylesheet
+   ========================================================= */
 
-  --font-display: 'Abril Fatface', Georgia, serif;
-  --font-body: 'Manrope', sans-serif;
-}
-
-* { box-sizing: border-box; }
-
-html { scroll-behavior: smooth; }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-}
-
-body {
+/* -----------------------------
+   1. RESET
+------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
-  font-family: var(--font-body);
-  color: var(--ink);
-  background: var(--bone);
+  padding: 0;
 }
 
-a { text-decoration: none; color: inherit; }
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--fontDisplay);
+  font-weight: 400; /* Abril Fatface ships as a single weight */
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+}
+
+/* -----------------------------
+   2. ROOT VARIABLES
+------------------------------ */
+:root {
+  /* Colors */
+  --colorWhite: #ffffff;
+  --colorBlack: #000000;
+  --colorGrey: #757575;
+
+  /* Fonts */
+  --fontDisplay: "Abril Fatface", "Times New Roman", serif;
+  --fontBody: "Manrope", "Helvetica Neue", Arial, sans-serif;
+
+  /* Layout */
+  --maxWidth: 1440px;
+  --gutter: 32px;
+  --border: 1px solid var(--colorBlack);
+  --borderLight: 1px solid #e0e0e0;
+  --headerHeight: 88px;
+}
+
+/* -----------------------------
+   3. PAGE SETUP
+------------------------------ */
+body {
+  background-color: var(--colorWhite);
+  color: var(--colorBlack);
+  font-family: var(--fontBody);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* -----------------------------
+   4. CONTAINER
+------------------------------ */
 .container {
-  max-width: 1240px;
+  width: 100%;
+  max-width: var(--maxWidth);
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 var(--gutter);
 }
 
-:focus-visible {
-  outline: 2px solid var(--brass);
-  outline-offset: 3px;
+/* -----------------------------
+   5. HEADER
+------------------------------ */
+header {
+  background-color: var(--colorWhite);
 }
 
-/* Skip link — hidden until focused, sits ahead of the overlay nav in tab order */
+.headerContainer {
+  height: var(--headerHeight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.navLink {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.logo img {
+  height: 22px;
+  width: auto;
+}
+
+/* -----------------------------
+   6. FOOTER
+------------------------------ */
+footer {
+  padding: 64px 0 32px;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  padding-bottom: 48px;
+}
+
+.logoAlt img {
+  height: 112px;
+  width: auto;
+}
+
+.footerNavLinks {
+  display: flex;
+  gap: 64px;
+}
+
+.footerNavGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footerLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--colorGrey);
+  margin-bottom: 4px;
+}
+
+.footerLink {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.footerBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  border-top: var(--borderLight);
+}
+
+.footerCopyright {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--colorGrey);
+}
+
+.footerSocials {
+  display: flex;
+  gap: 24px;
+}
+
+.socialLink {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* -----------------------------
+   7. UTILITY — skip link
+   (not in the base file; added since sign-in.html includes one)
+------------------------------ */
 .skipLink {
   position: absolute;
   top: -48px;
-  left: 16px;
-  z-index: 10000;
-  background: var(--bone);
-  color: var(--ink);
+  left: var(--gutter);
+  z-index: 100;
+  background: var(--colorBlack);
+  color: var(--colorWhite);
   padding: 12px 20px;
-  font-size: 13px;
-  font-weight: 600;
-  border-radius: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   transition: top 0.2s ease;
 }
 
@@ -58,285 +214,19 @@ a { text-decoration: none; color: inherit; }
   top: 16px;
 }
 
-/* ==========================================================================
-   Editorial Full-Screen Hover Navigation
-   (site-wide — appears on every page)
-   ========================================================================== */
-
-.sideNav {
-  position: fixed;
-  inset: 0 auto 0 0;
-  width: 48px;
-  height: 100vh;
-  z-index: 9999;
-  overflow: hidden;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 56px 0 64px 80px;
-
-  background: rgba(10, 10, 10, 0);
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  border: none;
-  box-shadow: none;
-  border-radius: 0;
-
-  transition:
-    width 0.70s cubic-bezier(0.22, 1, 0.36, 1),
-    background-color 0.50s ease,
-    backdrop-filter 0.50s ease,
-    -webkit-backdrop-filter 0.50s ease;
-}
-
-.sideNav:hover,
-.sideNav:focus-within {
-  width: min(600px, 55vw);
-  background: rgba(10, 10, 10, 0.22);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-}
-
-.navHandle {
-  position: absolute;
-  top: 50%;
-  left: 24px;
-  transform: translate(-50%, -50%) scale(1);
-  width: 48px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.35s ease;
-}
-
-.navHandle img {
-  width: 18px;
-  height: 18px;
-  display: block;
-  object-fit: contain;
-}
-
-.sideNav:hover .navHandle,
-.sideNav:focus-within .navHandle {
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.75);
-}
-
-.navLogo {
-  opacity: 0;
-  transform: translateY(-12px);
-  transition:
-    opacity 0.35s ease 0.15s,
-    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
-}
-
-.navLogo img { height: 22px; width: auto; display: block; }
-
-.sideNav:hover .navLogo,
-.sideNav:focus-within .navLogo {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.navMenu {
-  display: flex;
-  flex-direction: column;
-  gap: 36px;
-  margin: auto 0;
-}
-
-.navMenu a {
-  width: fit-content;
-  font-family: var(--font-body);
-  font-size: clamp(38px, 4.5vw, 64px);
-  font-weight: 400;
-  line-height: 1.1;
-  color: var(--bone);
-  letter-spacing: 0.02em;
-  position: relative;
-  opacity: 0;
-  transform: translateX(-32px);
-  transition:
-    opacity 0.45s ease,
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    color 0.25s ease,
-    letter-spacing 0.25s ease;
-}
-
-.sideNav:hover .navMenu a,
-.sideNav:focus-within .navMenu a {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.sideNav:hover .navMenu a:nth-child(1),
-.sideNav:focus-within .navMenu a:nth-child(1) { transition-delay: 0.22s, 0.22s, 0s, 0s; }
-.sideNav:hover .navMenu a:nth-child(2),
-.sideNav:focus-within .navMenu a:nth-child(2) { transition-delay: 0.28s, 0.28s, 0s, 0s; }
-.sideNav:hover .navMenu a:nth-child(3),
-.sideNav:focus-within .navMenu a:nth-child(3) { transition-delay: 0.34s, 0.34s, 0s, 0s; }
-.sideNav:hover .navMenu a:nth-child(4),
-.sideNav:focus-within .navMenu a:nth-child(4) { transition-delay: 0.40s, 0.40s, 0s, 0s; }
-
-.navMenu a:hover,
-.navMenu a:focus-visible {
-  color: var(--brass);
-  letter-spacing: 0.08em;
-  transform: translateX(12px);
-}
-
-.navMenu a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -6px;
-  width: 0;
-  height: 1px;
-  background: var(--brass);
-  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.navMenu a:hover::after,
-.navMenu a:focus-visible::after {
-  width: 100%;
-}
-
-.navMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  opacity: 0;
-  font-size: 11px;
-  letter-spacing: 0.35em;
-  text-transform: uppercase;
-  color: rgba(243, 241, 236, 0.45);
-  transition: opacity 0.35s ease 0.48s;
-}
-
-.sideNav:hover .navMeta,
-.sideNav:focus-within .navMeta {
-  opacity: 1;
-}
-
-/* Header shell (site-wide — sits above whatever page content follows) */
-
-header {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-  padding-top: 32px;
-}
-
-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 160px;
-  background: linear-gradient(to bottom, rgba(10, 9, 8, 0.45), rgba(10, 9, 8, 0));
-  pointer-events: none;
-  z-index: -1;
-}
-
-.headerInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  gap: 64px;
-}
-
-.logo img { display: block; height: 32px; width: auto; }
-
-/* Footer (site-wide) */
-
-footer {
-  background: var(--bone);
-  border-top: 1px solid rgba(18, 17, 16, 0.1);
-  padding: 64px 0 32px;
-}
-
-.footerContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 48px;
-  padding-bottom: 48px;
-}
-
-.logoAlt img { display: block; height: 22px; width: auto; }
-
-.footerNavLinks { display: flex; gap: 64px; }
-
-.footerNavGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.footerLabel {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--stone);
-  margin-bottom: 4px;
-}
-
-.footerLink {
-  font-size: 14px;
-  color: var(--ink);
-  width: fit-content;
-}
-
-.footerLink:hover,
-.footerLink:focus-visible { color: var(--brass); }
-
-.footerBottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(18, 17, 16, 0.1);
-}
-
-.footerCopyright { font-size: 12px; color: var(--stone); margin: 0; }
-
-.footerSocials { display: flex; gap: 24px; }
-
-.socialLink { font-size: 12px; color: var(--stone); }
-
-.socialLink:hover,
-.socialLink:focus-visible { color: var(--brass); }
-
-/* ==========================================================================
-   Sign-in / Sign-up — page-specific
-   ========================================================================== */
-
+/* -----------------------------
+   8. SIGN-IN / SIGN-UP
+------------------------------ */
 .authSection {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 200px 0 120px;
+  padding: 96px 0 140px;
 }
 
 .authCard {
   width: 100%;
-  max-width: 440px;
+  max-width: 420px;
   margin: 0 auto;
 }
 
@@ -348,7 +238,7 @@ footer {
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--stone);
+  color: var(--colorGrey);
 }
 
 .authEyebrow::before {
@@ -357,68 +247,61 @@ footer {
   top: 0;
   left: 0;
   width: 32px;
-  height: 2px;
-  background: var(--brass);
+  height: 1px;
+  background: var(--colorBlack);
 }
 
-/* Toggle: two text tabs over a hairline track, brass indicator slides between them */
+/* Toggle: two text tabs over a hairline track, a solid indicator slides between them */
 
 .authToggle {
   position: relative;
   display: flex;
   gap: 32px;
   margin-bottom: 40px;
-  border-bottom: 1px solid rgba(18, 17, 16, 0.12);
+  border-bottom: var(--borderLight);
 }
 
 .authToggleBtn {
-  appearance: none;
-  background: none;
-  border: none;
   padding: 0 0 14px;
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--stone);
+  color: var(--colorGrey);
   cursor: pointer;
   transition: color 0.25s ease;
 }
 
 .authToggleBtn.is-active {
-  color: var(--ink);
+  color: var(--colorBlack);
 }
 
 .authToggleBtn:hover,
 .authToggleBtn:focus-visible {
-  color: var(--ink);
+  color: var(--colorBlack);
 }
 
 .authToggleIndicator {
   position: absolute;
   bottom: -1px;
   left: 0;
-  height: 2px;
+  height: 1px;
   width: 64px;
-  background: var(--brass);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  background: var(--colorBlack);
+  transition: transform 0.4s ease, width 0.4s ease;
 }
 
 .authHeading {
   margin: 0 0 12px;
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(32px, 4vw, 42px);
+  font-size: clamp(30px, 4vw, 40px);
   line-height: 1.15;
-  color: var(--ink);
 }
 
 .authSubtext {
   margin: 0 0 36px;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
-  color: var(--stone);
+  color: var(--colorGrey);
   max-width: 38ch;
 }
 
@@ -438,85 +321,76 @@ footer {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--stone);
+  color: var(--colorGrey);
 }
 
 .authField input {
+  display: block;
   width: 100%;
   padding: 12px 2px;
-  font-family: var(--font-body);
   font-size: 15px;
-  color: var(--ink);
   background: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(18, 17, 16, 0.2);
+  border-bottom: 1px solid #cccccc;
   border-radius: 0;
   transition: border-color 0.25s ease;
 }
 
 .authField input::placeholder {
-  color: rgba(140, 135, 125, 0.7);
+  color: #aaaaaa;
 }
 
 .authField input:hover {
-  border-color: rgba(18, 17, 16, 0.4);
+  border-color: var(--colorGrey);
 }
 
-.authField input:focus {
+.authField input:focus-visible {
   outline: none;
-  border-color: var(--brass);
+  border-color: var(--colorBlack);
 }
 
 .authForgot {
   display: block;
   width: fit-content;
   margin: -4px 0 28px auto;
-  font-size: 13px;
-  color: var(--brass);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--colorGrey);
 }
 
 .authForgot:hover,
 .authForgot:focus-visible {
-  color: var(--brass-light);
+  color: var(--colorBlack);
 }
 
 .authSubmit {
-  appearance: none;
   width: 100%;
   padding: 17px 24px;
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--bone);
-  background: var(--ink);
-  border: none;
-  border-radius: 2px;
+  color: var(--colorWhite);
+  background: var(--colorBlack);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.25s ease;
 }
 
 .authSubmit:hover,
 .authSubmit:focus-visible {
-  background: var(--brass);
+  background: var(--colorGrey);
 }
 
 .authSwitch {
   margin: 28px 0 0;
   text-align: center;
-  font-size: 14px;
-  color: var(--stone);
+  font-size: 13px;
+  color: var(--colorGrey);
 }
 
 .authSwitchLink {
-  appearance: none;
-  background: none;
-  border: none;
-  padding: 0;
-  font: inherit;
-  font-weight: 700;
-  color: var(--brass);
+  font-weight: 600;
+  color: var(--colorBlack);
   text-underline-offset: 3px;
   text-decoration: underline;
   cursor: pointer;
@@ -524,19 +398,18 @@ footer {
 
 .authSwitchLink:hover,
 .authSwitchLink:focus-visible {
-  color: var(--brass-light);
+  color: var(--colorGrey);
 }
 
-/* Shared responsive rules (header/footer/container — layout-agnostic) */
-
+/* -----------------------------
+   9. RESPONSIVE
+------------------------------ */
 @media (max-width: 860px) {
-  .container { padding: 0 24px; }
-  header { padding-top: 20px; }
   .footerNavLinks { gap: 40px; }
 }
 
 @media (max-width: 700px) {
   .footerContainer { flex-direction: column; gap: 32px; }
-  .authSection { padding: 160px 0 80px; }
+  .authSection { padding: 64px 0 96px; }
   .authToggle { gap: 24px; }
 }
